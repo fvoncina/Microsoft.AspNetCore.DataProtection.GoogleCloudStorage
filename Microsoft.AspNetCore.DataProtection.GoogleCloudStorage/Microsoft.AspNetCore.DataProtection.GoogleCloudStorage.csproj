@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>    
+    <PackageTags>aspnetcore;dataprotection;gcp;gcs</PackageTags>    
+    <Version>0.0.5</Version>    
+    <Company />    
+    <PackageProjectUrl>https://github.com/fvoncina/Microsoft.AspNetCore.DataProtection.GoogleCloudStorage</PackageProjectUrl>    
+    <RepositoryUrl>https://github.com/fvoncina/Microsoft.AspNetCore.DataProtection.GoogleCloudStorage</RepositoryUrl>    
+    <RepositoryType>github</RepositoryType>    
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>    
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Datastore.V1" Version="2.1.0" />
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
