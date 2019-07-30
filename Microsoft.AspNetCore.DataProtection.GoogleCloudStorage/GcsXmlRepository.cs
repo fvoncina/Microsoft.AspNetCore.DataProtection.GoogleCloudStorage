@@ -35,7 +35,7 @@ namespace Microsoft.AspNetCore.DataProtection.GoogleCloudStorage
         public GcsXmlRepository(Func<StorageClient> gcsClientFactory, string bucketName, string name = "keys")
         {
             _gcsClientFactory = gcsClientFactory ?? throw new ArgumentNullException(nameof(gcsClientFactory));
-            _bucketName = _bucketName ?? throw new ArgumentNullException(nameof(bucketName));
+            _bucketName = bucketName ?? throw new ArgumentNullException(nameof(bucketName));
             _name = name ?? throw new ArgumentNullException(nameof(name));
             _random = new Random();
         }
@@ -192,27 +192,28 @@ namespace Microsoft.AspNetCore.DataProtection.GoogleCloudStorage
                 doc.Root.Add(element);
 
                 // Turn this document back into a byte[].
-
-                var serializedDoc = new MemoryStream();
-                doc.Save(serializedDoc, SaveOptions.DisableFormatting);
-
-                try
+                using (var serializedDoc = new MemoryStream())
                 {
-                    serializedDoc.Seek(0, SeekOrigin.Begin);
+                    doc.Save(serializedDoc, SaveOptions.DisableFormatting);
 
-                    var obj = await storageClient.UploadObjectAsync(_bucketName, _name, "application/xml", serializedDoc);
-
-                    Volatile.Write(ref _cachedBlobData, new BlobData()
+                    try
                     {
-                        BlobContents = serializedDoc.ToArray(),
-                        ETag = obj.ETag // was updated by Upload routine
-                    });
+                        serializedDoc.Seek(0, SeekOrigin.Begin);
 
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    lastError = ExceptionDispatchInfo.Capture(ex);
+                        var obj = await storageClient.UploadObjectAsync(_bucketName, _name, "application/xml", serializedDoc);
+
+                        Volatile.Write(ref _cachedBlobData, new BlobData()
+                        {
+                            BlobContents = serializedDoc.ToArray(),
+                            ETag = obj.ETag // was updated by Upload routine
+                        });
+
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        lastError = ExceptionDispatchInfo.Capture(ex);
+                    }
                 }
             }
 
