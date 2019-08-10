@@ -10,7 +10,9 @@
     <RepositoryUrl>https://github.com/fvoncina/Microsoft.AspNetCore.DataProtection.GoogleCloudStorage</RepositoryUrl>    
     <RepositoryType>github</RepositoryType>    
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>    
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>    
+    <Authors>Facundo Voncina, Hector Escalante</Authors>    
+    <Description>Google Cloud Storage provider for Data Protection Keys</Description>
   </PropertyGroup>
 
   <ItemGroup>
